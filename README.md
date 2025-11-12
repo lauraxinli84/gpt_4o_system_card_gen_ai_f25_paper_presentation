@@ -46,7 +46,7 @@ GPT-4o Approach:
               0.32s
     No Information Loss ✅
 ```
-**ASR: automatic speech recognition, TTS: test to speech**
+**ASR: automatic speech recognition, TTS: text to speech**
 
 Before GPT-4o, multimodal AI systems used what we call **pipeline architectures**. You'd have three separate models working in sequence:
 
@@ -71,7 +71,7 @@ GPT-4o takes a different approach: train one model end-to-end on text, audio, im
 - Everything processed through the same neural network
 - Responds in 232-320ms—about as fast as humans do in conversation
 
-This isn't just faster—it fundamentally changes what the model can do. Because audio flows through the whole system without being converted to text first, GPT-4o can actually work with tone, emotion, and other aspects of speech that previous systems had to ignore.
+This isn't just faster, it fundamentally changes what the model can do. Because audio flows through the whole system without being converted to text first, GPT-4o can actually work with tone, emotion, and other aspects of speech that previous systems had to ignore.
 
 **How This Differs from Earlier Models:**
 - GPT-4 with vision used separate vision and language components bolted together
