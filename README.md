@@ -286,7 +286,6 @@ Parameters:
 | **Training** | Text-only pre-training | Simultaneous pre-training on text, audio, image, video |
 | **Output** | Single modality (text tokens) | Multiple modalities (text, audio, image) generated in parallel |
 | **Information Flow** | Token → Token | Multi-modal tokens → Multi-modal outputs (no information loss) |
-| **Latency** | N/A for text, 2.8-5.4s for voice mode | 232-320ms end-to-end for audio |
 
 ### What Makes This Different from Prior Multimodal Models?
 
