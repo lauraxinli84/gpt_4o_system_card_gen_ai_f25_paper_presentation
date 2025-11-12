@@ -489,25 +489,7 @@ This appears to be an area where OpenAI identified a genuine risk, documented it
 
 ---
 
-### 5. The Persuasion Risk Inconsistency
-
-GPT-4o received an overall **Medium risk** classification because text-based persuasion scored "borderline Medium." However, audio-based persuasion scored **Low risk**.
-
-**This Seems Counterintuitive:**
-
-If text presents borderline Medium risk for persuasion, one would expect audio—which conveys emotion, urgency, and tone—to be *more* persuasive, not less.
-
-**Possible Explanations:**
-
-1. The audio evaluation methodology may have been less sensitive, measuring party preference shifts which are inherently difficult to influence
-2. The model's audio capabilities may actually be more limited than its text capabilities
-3. Humans may be naturally more skeptical of AI-generated audio than text, at least currently
-
-The paper does not adequately explain this discrepancy. This is particularly notable because the fundamental purpose of GPT-4o is to leverage audio's richer communication channel—yet their evaluation suggests that channel is not more persuasive.
-
----
-
-### 6. Independent Evaluations Reveal Capability Limits
+### 5. Independent Evaluations Reveal Capability Limits
 
 Two third-party assessments provide particularly revealing insights:
 
@@ -531,7 +513,7 @@ Again, the model demonstrates conceptual understanding but cannot effectively ac
 
 ---
 
-### 7. Long-Term Deployment Considerations
+### 6. Long-Term Deployment Considerations
 
 The system card documents pre-deployment testing, but certain risks only emerge over extended time periods:
 
