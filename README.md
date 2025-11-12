@@ -46,6 +46,7 @@ GPT-4o Approach:
               0.32s
     No Information Loss ✅
 ```
+**ASR: automatic speech recognition, TTS: test to speech**
 
 Before GPT-4o, multimodal AI systems used what we call **pipeline architectures**. You'd have three separate models working in sequence:
 
