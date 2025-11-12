@@ -405,7 +405,7 @@ The system card does not disclose how the model actually works under the hood. W
 
 **What's Missing:**
 
-- **Model size**: The paper does not specify how many parameters GPT-4o has. Leaks suggest approximately 1.76 trillion parameters, but OpenAI has not confirmed this figure.
+- **Model size**: The paper does not specify how many parameters GPT-4o has. 
 - **Audio tokenization**: The exact mechanism for converting audio into tokens remains unclear. Are they discrete tokens similar to text, or continuous embeddings? This information is essential for understanding how the model processes speech.
 - **Training data composition**: The proportions of text, audio, and video data in the training mix are not disclosed. If 90% of training was text and only 10% audio, this would significantly affect model behavior—but we lack these details.
 - **Encoder/decoder specifications**: The architecture of the vision and audio encoders is unspecified. It's unclear whether they are pretrained separately (like CLIP and Whisper) and then integrated, or trained end-to-end from scratch.
