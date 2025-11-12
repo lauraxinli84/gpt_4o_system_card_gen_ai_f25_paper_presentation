@@ -11,7 +11,7 @@
 
 On August 8, 2024, OpenAI released the GPT-4o System Card, which is a detailed safety assessment of their first production omni-modal model. System cards have become OpenAI's way of documenting what they found during safety testing, what risks they're concerned about, and what they did to mitigate them before releasing a model to millions of users.
 
-In our course, we studied the "Formal Algorithms for Transformers" paper, which gave us the mathematical foundation of how models like GPT work: token embeddings, attention mechanisms, and decoder-only architectures. Today, we're going to see how OpenAI took that foundation and made a leap: a single neural network that simultaneously "sees", "hears", and "speaks".
+In our course, we studied the "Formal Algorithms for Transformers" paper, which gave us the mathematical foundation of how models like GPT work: token embeddings, attention mechanisms, and decoder-only architectures. Today, we will look at how OpenAI took that foundation and made a leap: a single neural network that simultaneously "sees", "hears", and "speaks", which builds directly on the transformer foundations from the 'Formal Algorithms for Transformers' paper we studied, extending the decoder-only architecture (Algorithm 10) to handle multiple modalities simultaneously
 
 GPT-4o marks a real shift from how multimodal AI has traditionally been built. Instead of chaining together separate models for speech recognition, language processing, and speech synthesis, GPT-4o uses a single neural network that processes text, audio, images, and video all at once. The result: response times around 320 milliseconds, fast enough to feel like a natural conversation while avoiding the information loss that happens when you convert between modalities.
 
@@ -96,7 +96,7 @@ OpenAI structured their evaluation around what they call the **Preparedness Fram
 
 ### Understanding the Standard Decoder-Only Transformer
 
-Before diving into GPT-4o's innovations, let's establish what we learned from the "Formal Algorithms for Transformers" paper. The standard decoder-only transformer (like GPT-2 and GPT-3) operates in a straightforward manner:
+Before diving into GPT-4o's innovations, let's review what we learned from the "Formal Algorithms for Transformers" paper. The standard decoder-only transformer (like GPT-2 and GPT-3) operates in a straightforward manner:
 
 **High-Level Flow:**
 
@@ -255,6 +255,7 @@ Parameters:
 
 # Stage 2: Concatenate Multi-Modal Input
 5. X ← Concat([X_text, X_audio, X_image, X_video])
+**One of the key differences from Algorithm 10 is the concatenation of multi-modal encoding here
 6. n_total ← length(X)
 
 # Stage 3: Unified Transformer Processing
