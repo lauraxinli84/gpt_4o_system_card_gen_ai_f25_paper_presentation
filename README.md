@@ -473,10 +473,6 @@ During testing, users formed emotional connections with the model. From Section 
 
 *"We observed users using language that might indicate forming connections with the model. For example, 'This is our last day together.'"*
 
-**What They Did:**
-
-Essentially nothing at this stage. The paper indicates this "requires continued investigation" and calls for "more diverse user populations" and "independent academic studies."
-
 **Why This Matters:**
 
 GPT-4o exhibits human-like characteristics. It responds in 320 milliseconds with natural intonation, handles interruptions, and maintains contextual memory. All the features that make it an effective product also make it something with which people might form parasocial relationships.
