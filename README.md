@@ -446,6 +446,7 @@ Evaluate on naturally occurring conversations—podcasts, phone calls, meeting r
 ---
 
 ### 3. The Voice Cloning Paradox
+![Voice Output Classifier Performance](./images/diagram_1.png)
 
 The paper claims their output classifier catches unauthorized voice generation with "100% recall." But then, in the same section, they write:
 
@@ -705,10 +706,15 @@ It's worth being clear about limitations:
 - Can't reliably complete multi-step tasks without human guidance
 - Still struggles with long-horizon planning
 
+![METR Autonomous Capabilities Comparison](./images/diagram_2.png)
+
 **Not Better at Dangerous Capabilities:**
 - Low risk for cybersecurity threats (19% on high school CTF challenges, 0% on professional level)
 - Low risk for biological threat creation
 - Moderate self-awareness but can't engage in deceptive scheming (per Apollo Research)
+
+![Apollo Research Scheming Capabilities Table](./images/diagram_3.png)
+
 
 **This is reassuring but also means:**
 - We're not at the point where these models can autonomously do research, write exploits, or act as independent agents
