@@ -29,6 +29,24 @@ The system card format itself is worth understanding. As AI models become more c
 
 ### The Problem GPT-4o Addresses
 
+```
+Pipeline Approach (Before GPT-4o):
+┌─────────┐     ┌─────────┐     ┌─────────┐
+│ Whisper │ --> │ GPT-4   │ --> │   TTS   │
+│ (ASR)   │     │  (LLM)  │     │(Speech) │
+└─────────┘     └─────────┘     └─────────┘
+   0.5s            2s              0.8s
+Information Loss ❌   Information Loss ❌
+
+GPT-4o Approach:
+┌────────────────────────────────────┐
+│     Single Unified Transformer      │
+│  Audio → Text → Vision → Audio      │
+└────────────────────────────────────┘
+              0.32s
+    No Information Loss ✅
+```
+
 Before GPT-4o, multimodal AI systems used what we call **pipeline architectures**. You'd have three separate models working in sequence:
 
 1. **Speech-to-text model** (like Whisper) converts your voice to text
@@ -101,6 +119,21 @@ This architecture is elegant and powerful, but fundamentally **unimodal**—it o
 #### Standard Decoder-Only Transformer Algorithm (GPT-2/GPT-3)
 
 ```
+Text Input
+    ↓
+[Token Embedding + Positional Embedding]
+    ↓
+[Transformer Layer 1]
+[Transformer Layer 2]
+    ...
+[Transformer Layer L]
+    ↓
+[Output Projection]
+    ↓
+Text Output (probability distribution)
+```
+
+```
 Algorithm: DTransformer(s|θ)
 Input: s ∈ V*, sequence of token IDs
 Output: P ∈ (0,1)^(V×|s|), probability distribution over next tokens
@@ -165,6 +198,29 @@ Now, here's where GPT-4o makes its revolutionary leap. Instead of three separate
 - **Context**: The model can use visual context when processing audio, or audio context when generating text
 
 #### GPT-4o Omni Model Algorithm
+
+```
+Inputs:
+┌──────┐  ┌──────┐  ┌──────┐  ┌──────┐
+│ Text │  │Audio │  │Image │  │Video │
+└──┬───┘  └──┬───┘  └──┬───┘  └──┬───┘
+   │         │         │         │
+   v         v         v         v
+[Text Emb][φ_audio][φ_vision][φ_vision]
+   └─────────┬──────────┘
+             v
+    [Concatenated Sequence]
+             ↓
+     [Unified Transformer]
+        (same layers)
+             ↓
+    ┌────────┴────────┐
+    v                 v
+[Text Head]    [Audio Head]  [Image Head]
+    │                │              │
+    v                v              v
+Text Output    Audio Output   Image Output
+```
 
 ```
 Algorithm: OmniTransformer(I_text, I_audio, I_image, I_video | θ)
