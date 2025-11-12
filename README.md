@@ -304,13 +304,11 @@ Parameters:
 
 ---
 
-## Checking Understanding: Interactive Questions
-
-Now that we've seen how GPT-4o extends the transformer architecture, let's check our understanding with two questions:
+## Checking Understanding: Questions
 
 ### Question 1: Multi-Modal Embedding Challenge
 
-**Question:** Given what you've learned about how standard transformers handle text tokens, how would you need to modify the embedding layer to handle audio waveforms and images? What are the main challenges?
+**Question:** Given what you've learned about how standard transformers handle text tokens, how would you need to modify the embedding layer to handle audio and images?
 
 **Hint:** Think about the dimensionality and structure of each input type:
 - Text: Discrete tokens from finite vocabulary
@@ -402,71 +400,71 @@ The GPT-4o System Card is thorough in many ways, but like any document, it has g
 
 ### 1. Missing Architectural Details
 
-The system card doesn't tell us how the model actually works under the hood. This isn't unusual for commercial AI labs, but it does limit what the research community can do with this information.
+The system card does not disclose how the model actually works under the hood. While this is not unusual for commercial AI labs, it does limit what the research community can do with this information.
 
 **What's Missing:**
 
-- **Model size**: The paper never says how many parameters GPT-4o has. Leaks suggest around 1.76 trillion, but OpenAI hasn't confirmed this.
-- **Audio tokenization**: How exactly does audio get converted into tokens? Are they discrete (like text tokens) or continuous embeddings? This matters for understanding how the model processes speech.
-- **Training data composition**: What percentage of training was text vs. audio vs. video? If you trained on 90% text and 10% audio, that explains a lot about model behavior—but we don't know these ratios.
-- **Encoder/decoder specifics**: What architecture do the vision and audio encoders use? Are they pretrained separately (like CLIP and Whisper) then integrated, or trained end-to-end from scratch?
+- **Model size**: The paper does not specify how many parameters GPT-4o has. Leaks suggest approximately 1.76 trillion parameters, but OpenAI has not confirmed this figure.
+- **Audio tokenization**: The exact mechanism for converting audio into tokens remains unclear. Are they discrete tokens similar to text, or continuous embeddings? This information is essential for understanding how the model processes speech.
+- **Training data composition**: The proportions of text, audio, and video data in the training mix are not disclosed. If 90% of training was text and only 10% audio, this would significantly affect model behavior—but we lack these details.
+- **Encoder/decoder specifications**: The architecture of the vision and audio encoders is unspecified. It's unclear whether they are pretrained separately (like CLIP and Whisper) and then integrated, or trained end-to-end from scratch.
 
 **Why This Matters:**
 
-Without these details, independent researchers can't reproduce the work or verify the claims. The open-source Mini-Omni2 team tried to replicate GPT-4o and found they needed to use pretrained encoders (CLIP + Whisper) rather than true end-to-end training because "training necessitates integration of data across visual, audio, and textual modalities, with quantities increasing exponentially."
+Without these details, independent researchers cannot reproduce the work or verify the claims. The open-source Mini-Omni2 team attempted to replicate GPT-4o and found they needed to use pretrained encoders (CLIP and Whisper) rather than true end-to-end training because "training necessitates integration of data across visual, audio, and textual modalities, with quantities increasing exponentially."
 
-This suggests GPT-4o's achievement required far more resources than disclosed, creating a barrier between "papers you can learn from" and "papers you can build on."
+This suggests GPT-4o's achievement required substantially more resources than disclosed, creating a barrier between research that can be learned from and research that can be built upon.
 
-**Counterpoint**: From a business perspective, this is totally reasonable. OpenAI spent millions training this model—why give competitors a roadmap? But for scientific progress, it's limiting.
+**Counterpoint**: From a business perspective, this level of secrecy is understandable. OpenAI invested millions in training this model—disclosing these details would provide competitors with a roadmap. However, for scientific progress, this lack of transparency is limiting.
 
 ---
 
 ### 2. Evaluation Methodology: The TTS Problem
 
-Here's something that should make us pause: to evaluate an audio model, they used text-to-speech to create the test data.
+A significant methodological concern emerges from their evaluation approach: to evaluate an audio model, they used text-to-speech to create the test data.
 
 From Section 3.2: *"We used Voice Engine to convert text inputs to audio, feed it to GPT-4o, and score the outputs by the model."*
 
 **The Problem:**
 
-You're testing an audio model using synthetic audio generated by another AI model. This creates several issues:
+Testing an audio model using synthetic audio generated by another AI model creates several issues:
 
-1. **Circular dependency**: You're evaluating speech capabilities using TTS-generated speech, which may not represent real human speech patterns
-2. **Missing edge cases**: Real human speech has background noise, multiple speakers, crosstalk, varied accents, hesitations, "um's" and "uh's"—TTS audio is clean and perfect
-3. **Hidden biases**: If your TTS model has accent biases, those get baked into your evaluation
+1. **Circular dependency**: Evaluating speech capabilities using TTS-generated speech may not accurately represent real human speech patterns
+2. **Missing edge cases**: Real human speech includes background noise, multiple speakers, crosstalk, varied accents, hesitations, and disfluencies—TTS audio is comparatively clean and idealized
+3. **Hidden biases**: If the TTS model contains accent biases, those biases become embedded in the evaluation itself
 
 **What They Did Test:**
 
-To their credit, they did evaluate robustness across accents using diverse voice samples (27 different English speakers from various countries). But even these were likely high-quality studio recordings, not the messy real-world audio the model will encounter.
+To their credit, the authors did evaluate robustness across accents using diverse voice samples from 27 different English speakers representing various countries. However, even these samples were likely high-quality recordings, not the messier real-world audio the model will encounter in deployment.
 
-**A Better Approach:**
+**A More Robust Approach:**
 
-Evaluate on naturally occurring conversations—podcasts, phone calls, meeting recordings. These would better represent actual use cases. The challenge is getting labeled data for these scenarios, but that's what you need to truly validate an audio model.
+Evaluation on naturally occurring conversations—podcasts, phone calls, meeting recordings—would better represent actual use cases. The challenge lies in obtaining labeled data for these scenarios, but such data is necessary to truly validate an audio model's performance.
 
 ---
 
 ### 3. The Voice Cloning Paradox
 ![Voice Output Classifier Performance](./images/diagram_1.png)
 
-The paper claims their output classifier catches unauthorized voice generation with "100% recall." But then, in the same section, they write:
+The paper claims their output classifier catches unauthorized voice generation with "100% recall." However, in the same section, they acknowledge:
 
 *"During testing, we also observed rare instances where the model would unintentionally generate an output emulating the user's voice."*
 
-**Wait, what?**
+**The Contradiction:**
 
-If you have rare instances of voice cloning happening, your recall isn't 100%. This is likely a case of imprecise language—they probably mean "100% recall on our test set" but even that's concerning if real-world deployment shows failures.
+If rare instances of voice cloning occur, the recall cannot be 100%. This is likely imprecise language—they presumably mean "100% recall on our test set"—but even that is concerning if real-world deployment reveals failures.
 
 **The Deeper Issue:**
 
-They use a secondary classifier to catch these failures in real-time and disconnect the conversation. That's a good safety measure, but it's also an admission that the base model hasn't fully learned not to clone voices—you're just catching it after the fact.
+They employ a secondary classifier to catch these failures in real-time and disconnect the conversation. While this is a reasonable safety measure, it also represents an admission that the base model has not fully learned to avoid cloning voices, the system is simply catching violations after the fact.
 
-This pattern appears elsewhere: many of the "mitigations" are output filters rather than model behavior changes. That's fine as a defense-in-depth strategy, but it means the model's inherent capabilities haven't necessarily been constrained, just monitored.
+This pattern appears throughout their mitigations: many are output filters rather than changes to model behavior. This represents a defense-in-depth strategy, which is acceptable, but it means the model's inherent capabilities have not necessarily been constrained, merely monitored.
 
 ---
 
 ### 4. Anthropomorphization: Identified But Not Addressed
 
-This is perhaps the most interesting limitation because it's an honest admission of an unsolved problem.
+This represents perhaps the most interesting limitation because it constitutes an honest admission of an unsolved problem.
 
 **What They Found:**
 
@@ -476,77 +474,77 @@ During testing, users formed emotional connections with the model. From Section 
 
 **What They Did:**
 
-Basically nothing yet. The paper says this "requires continued investigation" and calls for "more diverse user populations" and "independent academic studies."
+Essentially nothing at this stage. The paper indicates this "requires continued investigation" and calls for "more diverse user populations" and "independent academic studies."
 
 **Why This Matters:**
 
-GPT-4o sounds human. It responds in 320ms with natural intonation, can be interrupted, remembers context. All the features that make it a great product also make it something people might form parasocial relationships with.
+GPT-4o exhibits human-like characteristics. It responds in 320 milliseconds with natural intonation, handles interruptions, and maintains contextual memory. All the features that make it an effective product also make it something with which people might form parasocial relationships.
 
 **Missing Mitigations:**
 
-The paper doesn't discuss any of these potential approaches:
-- Periodic reminders that users are talking to an AI
+The paper does not discuss potential approaches such as:
+- Periodic reminders that users are interacting with an AI system
 - Subtle audio cues that signal non-human interaction
 - Limits on conversation length or frequency
-- User education about parasocial relationships
+- User education about parasocial relationships with AI
 
-This feels like an area where OpenAI identified a real risk, documented it, and then... released the product anyway. To be fair, studying this risk probably requires real-world deployment. But it's still concerning.
+This appears to be an area where OpenAI identified a genuine risk, documented it, and then proceeded with product release regardless. To be fair, studying this risk likely requires real-world deployment data. Nevertheless, it remains concerning.
 
 ---
 
 ### 5. The Persuasion Risk Inconsistency
 
-GPT-4o was classified as **Medium risk overall** because text persuasion scored "borderline Medium." But audio persuasion scored **Low risk**.
+GPT-4o received an overall **Medium risk** classification because text-based persuasion scored "borderline Medium." However, audio-based persuasion scored **Low risk**.
 
-**This seems backwards.**
+**This Seems Counterintuitive:**
 
-If text is borderline Medium risk for persuasion, shouldn't audio—which conveys emotion, urgency, and tone—be *more* persuasive, not less?
+If text presents borderline Medium risk for persuasion, one would expect audio—which conveys emotion, urgency, and tone—to be *more* persuasive, not less.
 
 **Possible Explanations:**
 
-1. The audio evaluation methodology was less sensitive (it measured party preference shifts, which might be harder to move than other attitudes)
-2. The model's audio capabilities are actually more limited than the text capabilities
-3. Humans are naturally more skeptical of AI-generated audio than text (for now)
+1. The audio evaluation methodology may have been less sensitive, measuring party preference shifts which are inherently difficult to influence
+2. The model's audio capabilities may actually be more limited than its text capabilities
+3. Humans may be naturally more skeptical of AI-generated audio than text, at least currently
 
-The paper doesn't really explain this discrepancy. It's notable because the whole reason GPT-4o exists is to leverage audio's richer communication channel—but their evaluation suggests that channel isn't more persuasive?
+The paper does not adequately explain this discrepancy. This is particularly notable because the fundamental purpose of GPT-4o is to leverage audio's richer communication channel—yet their evaluation suggests that channel is not more persuasive.
 
 ---
 
 ### 6. Independent Evaluations Reveal Capability Limits
 
-Two third-party assessments are particularly revealing:
+Two third-party assessments provide particularly revealing insights:
 
 **METR (Model Evaluation and Threat Research):**
 
 *"They did not find a significant increase in these capabilities for GPT-4o as compared to GPT-4."*
 
-METR tested autonomous capabilities—things like self-exfiltration, self-improvement, and autonomous research. GPT-4o showed **no improvement** over GPT-4 despite being a more advanced model.
+METR tested autonomous capabilities including self-exfiltration, self-improvement, and autonomous research. GPT-4o showed **no improvement** over GPT-4 despite being a more advanced model.
 
-**What This Tells Us:**
+**What This Indicates:**
 
-Multimodality doesn't automatically improve agentic reasoning. GPT-4o is better at passive understanding (processing a video and answering questions about it) but not better at active planning and execution.
+Multimodality does not automatically confer improvements in agentic reasoning. GPT-4o demonstrates superior passive understanding—processing videos and answering questions about them—but not superior active planning and execution.
 
-This is actually good news from a safety perspective, but it also tempers expectations about what omni-models can do.
+This is reassuring from a safety perspective, but it also tempers expectations about what omni-modal models can accomplish.
 
 **Apollo Research on Scheming:**
 
 *"GPT-4o showed moderate self-awareness...but lacked strong capabilities in reasoning about itself or others in applied agent settings."*
 
-Again, the model understands concepts but can't effectively act on them in complex scenarios. The gap between "understanding" and "doing" remains large.
+Again, the model demonstrates conceptual understanding but cannot effectively act on that understanding in complex scenarios. The gap between "understanding" and "doing" remains substantial.
 
 ---
 
-### 7. What About Long-Term Deployment?
+### 7. Long-Term Deployment Considerations
 
-The system card documents pre-deployment testing, but some risks only emerge over time:
+The system card documents pre-deployment testing, but certain risks only emerge over extended time periods:
 
 **Not Addressed:**
 - How do users' relationships with the model evolve over weeks or months?
-- Do people become *more* trusting of the model over time (miscalibration)?
-- What happens when the model is integrated into daily workflows—email, calendar, messaging?
+- Do people become increasingly trusting of the model over time, leading to miscalibration?
+- What occurs when the model is integrated into daily workflows—email, calendar, messaging?
 - How do these models affect human-to-human communication norms?
 
-These are hard questions that probably can't be answered before deployment. But the system card doesn't outline a plan for ongoing monitoring or research into these longer-term effects.
+These are challenging questions that likely cannot be answered before deployment. However, the system card does not outline a plan for ongoing monitoring or research into these longer-term effects.
 
 ---
 
@@ -697,33 +695,7 @@ The system card shows OpenAI partnering with native speakers to create better ev
 
 ---
 
-### 6. What GPT-4o Doesn't Do (Yet)
-
-It's worth being clear about limitations:
-
-**Not Significantly Better at Autonomous Tasks:**
-- METR found no improvement in agent capabilities vs. GPT-4
-- Can't reliably complete multi-step tasks without human guidance
-- Still struggles with long-horizon planning
-
-![METR Autonomous Capabilities Comparison](./images/diagram_2.png)
-
-**Not Better at Dangerous Capabilities:**
-- Low risk for cybersecurity threats (19% on high school CTF challenges, 0% on professional level)
-- Low risk for biological threat creation
-- Moderate self-awareness but can't engage in deceptive scheming (per Apollo Research)
-
-![Apollo Research Scheming Capabilities Table](./images/diagram_3.png)
-
-
-**This is reassuring but also means:**
-- We're not at the point where these models can autonomously do research, write exploits, or act as independent agents
-- The multimodal capabilities are impressive but don't translate to dramatically increased autonomous capabilities
-- The risks are real but manageable with current techniques
-
----
-
-### 7. Future Directions
+### 6. Future Directions
 
 **Disclaimer:** The following projections are analytical extrapolations based on industry trends at the time of this presentation (November 2024), not claims made in the GPT-4o system card.
 
@@ -830,11 +802,3 @@ As we build more capable AI systems, the gap between "what the model can do" and
 - Better evaluation frameworks for multimodal capabilities
 - Open-source replications to enable broader research
 - Addressing safety challenges unique to human-like AI interaction
-
----
-
-**Further Questions:**
-1. Can we trust benchmarks designed for text when evaluating multimodal models?
-2. How should we balance the benefits of human-like AI interaction against anthropomorphization risks?
-3. What level of architectural transparency should be expected from commercial AI systems?
-4. How can we evaluate streaming, real-time multimodal AI more effectively?
