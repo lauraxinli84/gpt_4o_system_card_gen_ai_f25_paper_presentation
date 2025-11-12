@@ -1,6 +1,6 @@
 # GPT-4o System Card: From Pipeline to End-to-End Multimodal AI
 
-**Presenter:** Laura Li
+**Presenter:** Laura Li  
 **Course:** DS 5690-01 Gen AI Models in Theory & Practice  
 **Date:** 11.12.2025
 
