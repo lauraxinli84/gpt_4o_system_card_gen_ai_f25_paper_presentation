@@ -440,7 +440,7 @@ To their credit, the authors did evaluate robustness across accents using divers
 
 **A More Robust Approach:**
 
-Evaluation on naturally occurring conversations—podcasts, phone calls, meeting recordings—would better represent actual use cases. The challenge lies in obtaining labeled data for these scenarios, but such data is necessary to truly validate an audio model's performance.
+Evaluation on naturally occurring conversations—podcasts, phone calls, meeting recordings, would better represent actual use cases. The challenge lies in obtaining labeled data for these scenarios, but such data is necessary to truly validate an audio model's performance.
 
 ---
 
@@ -453,7 +453,7 @@ The paper claims their output classifier catches unauthorized voice generation w
 
 **The Contradiction:**
 
-If rare instances of voice cloning occur, the recall cannot be 100%. This is likely imprecise language—they presumably mean "100% recall on our test set"—but even that is concerning if real-world deployment reveals failures.
+If rare instances of voice cloning occur, the recall cannot be 100%. This is likely imprecise language, they presumably mean "100% recall on our test set". But even that is concerning if real world deployment reveals failures.
 
 **The Deeper Issue:**
 
