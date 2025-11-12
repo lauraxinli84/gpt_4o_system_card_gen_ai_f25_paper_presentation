@@ -308,7 +308,7 @@ Parameters:
 
 ### Question 1: Multi-Modal Embedding Challenge
 
-**Question:** Given what you've learned about how standard transformers handle text tokens, how would you need to modify the embedding layer to handle audio and images?
+**Question:** Given what we've learned about how standard transformers handle text tokens, how would you need to modify the embedding layer to handle audio and images?
 
 **Hint:** Think about the dimensionality and structure of each input type:
 - Text: Discrete tokens from finite vocabulary
