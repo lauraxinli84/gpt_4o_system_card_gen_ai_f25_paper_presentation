@@ -377,44 +377,37 @@ The key insight: Instead of forcing all modalities into text (pipeline approach)
 
 ### Question 2: Streaming Attention Mechanisms
 
-**Question:** In standard transformers, we use causal masking: `Mask[i,j] = [[i ≤ j]]` so tokens only attend to previous positions. But in GPT-4o's real-time audio conversations, in certain cases if the user interrupts/talks over the model, audio tokens are being streamed in AND generated out simultaneously. How should attention masking work in this scenario?
+**Question:** In GPT-4o's unified transformer, when the model is generating a text response about an image while also processing audio input, how does the attention mechanism allow the model to integrate information from all three modalities simultaneously? Why couldn't a pipeline approach achieve this?
 
-**Hint:** Consider what happens when:
-- The model is generating audio output
-- User audio input arrives simultaneously
-- User interrupts mid-generation
+**Hint:** Think about:
+- What each token in the sequence can "attend to"
+- When information from different modalities becomes available to the model
+- What gets lost when you convert between modalities in a pipeline
 
 <details>
 <summary><b>Click to reveal answer</b></summary>
 
 **Answer:**
 
-This requires **bidirectional attention for input** and **causal attention for output**:
+After the modality-specific encoders, all inputs are concatenated into a single sequence:
+```
+[text_token_1, text_token_2, audio_token_1, audio_token_2, 
+ image_patch_1, image_patch_2, ...]
+```
+During attention, **each position can attend to all other positions** (following the causal mask). This means:
 
-1. **For Input Tokens** (already received):
-   - Full bidirectional attention: `Mask[i,j] = 1` for all received tokens
-   - The model can look at entire input context at once
-     - Previous user input
-     - The interruption itself
-     - Its own partial output (for context)
-   - Helps understand: tone, pauses, context before responding
+- When generating text output, the model can simultaneously attend to image patches, audio tokens, and previous text
+- The model sees the raw encoded representations from all modalities, not converted/interpreted versions
+- Cross-modal relationships are learned directly during training
 
-2. **For Output Tokens** (being generated):
-   - Causal masking: `Mask[i,j] = [[i ≤ j]]`
-   - Output tokens can't see "future" outputs
-   - Maintains autoregressive property
+**Why pipelines can't do this:**
+In a pipeline (e.g., Whisper → GPT-4 → TTS):
 
-3. **Cross-Modal Attention**:
-   - Output audio tokens can attend to ALL input tokens (audio, text, video)
-   - Enables: "based on what I'm seeing and hearing..."
+1. **Audio → Text conversion loses information:** Tone, emotion, pauses, emphasis are discarded during transcription
+2. **Sequential bottleneck:** The language model only sees text, never the original audio or images
+3. **No cross-modal attention:** Each component operates independently—the speech recognizer can't use visual context, the language model can't "hear" the audio
 
-**Interruption Handling** (the tricky part):
-- When user interrupts, model must:
-  - Stop current generation
-  - Attend to new input
-  - Possibly discard partial output
-- This requires sophisticated streaming control
-- Paper doesn't fully specify this mechanism
+**Key insight:** The unified architecture enables the transformer to learn cross-modal relationships that pipeline approaches fundamentally cannot capture because information is lost at conversion boundaries.
 
 </details>
 
