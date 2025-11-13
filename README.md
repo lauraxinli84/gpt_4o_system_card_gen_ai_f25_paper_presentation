@@ -2,7 +2,6 @@
 
 **Presenter:** Laura Li  
 **Course:** DS 5690-01 Gen AI Models in Theory & Practice  
-**Date:** 11.12.2025
 
 **Paper:** "GPT-4o System Card" by OpenAI (August 8, 2024)  
 **Citation:** OpenAI. (2024). GPT-4o System Card. arXiv:2410.21276v1 [cs.CL]. https://arxiv.org/abs/2410.21276
