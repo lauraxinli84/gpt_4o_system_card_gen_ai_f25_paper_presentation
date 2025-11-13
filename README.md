@@ -104,8 +104,6 @@ OpenAI structured their evaluation around what they call the **Preparedness Fram
 4. **Independent Validation**: Third parties (METR and Apollo Research) ran their own tests
 5. **Societal Impact Analysis**: Healthcare applications, potential for emotional attachment, effects on underrepresented languages
 
-**Bottom Line Finding**: GPT-4o scored Medium risk overall (specifically for text-based persuasion), though audio persuasion was Low risk. Everything else—cybersecurity, dangerous capabilities, autonomous behavior—came back as Low risk.
-
 ---
 
 ## Architecture Overview: Transformer to Omni Model
