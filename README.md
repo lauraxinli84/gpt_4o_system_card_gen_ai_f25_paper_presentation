@@ -39,10 +39,25 @@ Pipeline Approach (Before GPT-4o):
 Information Loss ❌   Information Loss ❌
 
 GPT-4o Approach:
-┌────────────────────────────────────┐
-│     Single Unified Transformer      │
-│  Audio → Text → Vision → Audio      │
-└────────────────────────────────────┘
+┌─────────────────────────────────────┐
+│  Unified Transformer Processing     │
+│  ┌─────┐  ┌─────┐  ┌──────┐        │
+│  │Audio│  │Text │  │Vision│         │
+│  │Input│  │Input│  │Input │         │
+│  └──┬──┘  └──┬──┘  └───┬──┘         │
+│     └─────────┼─────────┘            │
+│               ▼                      │
+│    [Concatenated Sequence]           │
+│               ▼                      │
+│    [Transformer Layers 1→L]          │
+│               ▼                      │
+│    ┌──────────┴──────────┐          │
+│    ▼          ▼          ▼           │
+│  ┌─────┐  ┌─────┐  ┌──────┐         │
+│  │Audio│  │Text │  │Image │         │
+│  │ Out │  │ Out │  │ Out  │         │
+│  └─────┘  └─────┘  └──────┘         │
+└─────────────────────────────────────┘
               0.32s
     No Information Loss ✅
 ```
@@ -57,7 +72,7 @@ Before GPT-4o, multimodal AI systems used what we call **pipeline architectures*
 This works, but it has real limitations:
 
 **Performance Issues:**
-- **Slow**: Takes 2.8 to 5.4 seconds to respond—much slower than human conversation
+- **Slow**: Takes 2.8 to 5.4 seconds to respond, much slower than human conversation
 - **Information loss**: Tone of voice, emotion, pauses, background context—all of this gets lost when converting speech to text and back
 - **Computational cost**: Running three separate models for every interaction
 - **No cross-modal awareness**: The language model never actually "hears" your voice or "sees" what you're showing it
@@ -159,7 +174,23 @@ Parameters:
 9. X ← LayerNorm(X | γ, β)
 10. Return P = softmax(E_U · X)
 ```
+```
+Traditional Multimodal (e.g., GPT-4 with Vision):
+┌──────────┐     ┌──────────┐
+│  Vision  │────▶│   Text   │────▶ Text Output
+│ Encoder  │     │   LLM    │
+└──────────┘     └──────────┘
+    ↓ (vision features as context)
+(Information bottleneck)
 
+GPT-4o Omni Approach:
+┌────────────────────────────────┐
+│    Single Unified Network      │
+│  Audio + Text + Vision ────▶   │────▶ Audio + Text + Image
+│  (processed together)          │
+└────────────────────────────────┘
+(No information loss)
+```
 ---
 
 ### GPT-4o's Omni-Modal Extension
@@ -349,7 +380,7 @@ The key insight: Instead of forcing all modalities into text (pipeline approach)
 
 ### Question 2: Streaming Attention Mechanisms
 
-**Question:** In standard transformers, we use causal masking: `Mask[i,j] = [[i ≤ j]]` so tokens only attend to previous positions. But in GPT-4o's real-time audio conversations, audio tokens are being streamed in AND generated out simultaneously. How should attention masking work in this scenario?
+**Question:** In standard transformers, we use causal masking: `Mask[i,j] = [[i ≤ j]]` so tokens only attend to previous positions. But in GPT-4o's real-time audio conversations, in certain cases if the user interrupts/talks over the model, audio tokens are being streamed in AND generated out simultaneously. How should attention masking work in this scenario?
 
 **Hint:** Consider what happens when:
 - The model is generating audio output
@@ -366,6 +397,9 @@ This requires **bidirectional attention for input** and **causal attention for o
 1. **For Input Tokens** (already received):
    - Full bidirectional attention: `Mask[i,j] = 1` for all received tokens
    - The model can look at entire input context at once
+     - Previous user input
+     - The interruption itself
+     - Its own partial output (for context)
    - Helps understand: tone, pauses, context before responding
 
 2. **For Output Tokens** (being generated):
@@ -384,12 +418,6 @@ This requires **bidirectional attention for input** and **causal attention for o
   - Possibly discard partial output
 - This requires sophisticated streaming control
 - Paper doesn't fully specify this mechanism
-
-**Streaming vs. Batch Trade-off:**
-- Streaming: Lower latency but more complex attention patterns
-- Batch: Simpler but higher latency
-
-The paper mentions 232-320ms latency, suggesting heavy optimization for streaming.
 
 </details>
 
@@ -447,7 +475,7 @@ Evaluation on naturally occurring conversations—podcasts, phone calls, meeting
 ### 3. The Voice Cloning Paradox
 ![Voice Output Classifier Performance](./images/diagram_1.png)
 
-The paper claims their output classifier catches unauthorized voice generation with "100% recall." However, in the same section, they acknowledge:
+The paper claims their output classifier (meant to catch instances pf unauthorized voice cloning and then stop generation) catches unauthorized voice generation with "100% recall." However, in the same section, they acknowledge:
 
 *"During testing, we also observed rare instances where the model would unintentionally generate an output emulating the user's voice."*
 
