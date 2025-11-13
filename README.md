@@ -128,7 +128,7 @@ Before diving into GPT-4o's innovations, let's review what we learned from the "
 
 4. **Causal Constraint**: Due to the attention mask `Mask[i,j] = [[i ≤ j]]`, each token can only see itself and previous tokens, enabling autoregressive generation (predicting one token at a time from left to right).
 
-This architecture is elegant and powerful, but fundamentally **unimodal**—it only processes text tokens.
+This architecture is powerful, but fundamentally **unimodal**, it only processes text tokens.
 
 #### Standard Decoder-Only Transformer Algorithm (GPT-2/GPT-3)
 
