@@ -676,6 +676,29 @@ As we build more capable AI systems, the gap between "what the model can do" and
 
 ---
 
+## Additional Resources
+
+1. **Official Paper**: [GPT-4o System Card (arXiv)](https://arxiv.org/abs/2410.21276) - Full technical and safety evaluation details
+
+2. **OpenAI Blog Post**: [Hello GPT-4o](https://openai.com/index/hello-gpt-4o/) - High-level introduction with demo videos
+
+3. **Third-Party Evaluation**:
+   - [METR's GPT-4o Assessment](https://evaluations.metr.org/gpt-4o-report/ ) - Independent evaluation of autonomous capabilities
+
+4. **Open Source Replications**:
+   - [Mini-Omni2 Paper](https://arxiv.org/abs/2410.11190) - Attempt to recreate GPT-4o architecture
+   - [Mini-Omni2 GitHub](https://github.com/gpt-omni/mini-omni2) - Code and model weights
+
+5. **Related Technical Deep Dives**:
+   - [Formal Algorithms for Transformers](https://arxiv.org/abs/2207.09238) - Foundational transformer architecture (our course paper)
+   - [Multimodal Learning Overview](https://dataroots.io/blog/gpt4-multimodality) - Explains fusion techniques
+
+6. **Safety and Ethics**:
+   - [OpenAI Red Teaming Network](https://openai.com/index/red-teaming-network/) - How external experts evaluate models
+   - [MIT Tech Review on Emotional Voice Risks](https://www.technologyreview.com/2024/08/09/1094715/openai-gpt4o-emotional-voice/)
+
+---
+
 ## Summary
 
 **GPT-4o represents a fundamental architectural shift** in how we build multimodal AI systems:
@@ -709,26 +732,3 @@ As we build more capable AI systems, the gap between "what the model can do" and
 - Better evaluation frameworks for multimodal capabilities
 - Open-source replications to enable broader research
 - Addressing safety challenges unique to human-like AI interaction
-
----
-
-## Additional Resources
-
-1. **Official Paper**: [GPT-4o System Card (arXiv)](https://arxiv.org/abs/2410.21276) - Full technical and safety evaluation details
-
-2. **OpenAI Blog Post**: [Hello GPT-4o](https://openai.com/index/hello-gpt-4o/) - High-level introduction with demo videos
-
-3. **Third-Party Evaluation**:
-   - [METR's GPT-4o Assessment](https://evaluations.metr.org/gpt-4o-report/ ) - Independent evaluation of autonomous capabilities
-
-4. **Open Source Replications**:
-   - [Mini-Omni2 Paper](https://arxiv.org/abs/2410.11190) - Attempt to recreate GPT-4o architecture
-   - [Mini-Omni2 GitHub](https://github.com/gpt-omni/mini-omni2) - Code and model weights
-
-5. **Related Technical Deep Dives**:
-   - [Formal Algorithms for Transformers](https://arxiv.org/abs/2207.09238) - Foundational transformer architecture (our course paper)
-   - [Multimodal Learning Overview](https://dataroots.io/blog/gpt4-multimodality) - Explains fusion techniques
-
-6. **Safety and Ethics**:
-   - [OpenAI Red Teaming Network](https://openai.com/index/red-teaming-network/) - How external experts evaluate models
-   - [MIT Tech Review on Emotional Voice Risks](https://www.technologyreview.com/2024/08/09/1094715/openai-gpt4o-emotional-voice/)
