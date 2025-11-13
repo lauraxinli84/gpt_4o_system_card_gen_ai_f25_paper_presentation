@@ -501,9 +501,7 @@ METR tested autonomous capabilities including self-exfiltration, self-improvemen
 
 **What This Indicates:**
 
-Multimodality does not automatically confer improvements in agentic reasoning. GPT-4o demonstrates superior passive understanding—processing videos and answering questions about them—but not superior active planning and execution.
-
-This is reassuring from a safety perspective, but it also tempers expectations about what omni-modal models can accomplish.
+Multimodality does not automatically confer improvements in agentic reasoning. GPT-4o demonstrates superior passive understanding, in processing videos and answering questions about them, but not superior active planning and execution.
 
 **Apollo Research on Scheming:**
 
@@ -515,12 +513,9 @@ Again, the model demonstrates conceptual understanding but cannot effectively ac
 
 ### 6. Long-Term Deployment Considerations
 
-The system card documents pre-deployment testing, but certain risks only emerge over extended time periods:
-
 **Not Addressed:**
 - How do users' relationships with the model evolve over weeks or months?
 - Do people become increasingly trusting of the model over time, leading to miscalibration?
-- What occurs when the model is integrated into daily workflows—email, calendar, messaging?
 - How do these models affect human-to-human communication norms?
 
 These are challenging questions that likely cannot be answered before deployment. However, the system card does not outline a plan for ongoing monitoring or research into these longer-term effects.
@@ -552,15 +547,11 @@ This is the big one. Before GPT-4o, everyone assumed you needed specialized mode
 It's not just about speed (though 320ms vs 3000ms is huge). It's about what becomes possible:
 - The model can understand tone and emotion because it never loses that information
 - You can interrupt mid-sentence and it handles it naturally
-- Context flows across modalities—it can reference what it sees while discussing what it hears
-
-**Competitive Landscape:**
-
-Every major lab is now racing to build their own omni model. The architecture has been validated.
+- Context flows across modalities, it can reference what it sees while discussing what it hears
 
 #### Competitive Landscape at Publication Time (August 2024)
 
-**Note:** This comparison reflects the AI landscape at the time of the GPT-4o system card publication (August 2024). The multimodal AI field evolves rapidly, and capabilities may have changed significantly since then.
+**Note:** This comparison reflects the AI landscape at the time of the GPT-4o system card publication (August 2024). 
 
 | Model | Released | Key Feature | Limitation vs GPT-4o (per paper) |
 |-------|----------|-------------|----------------------------------|
@@ -572,7 +563,7 @@ Every major lab is now racing to build their own omni model. The architecture ha
 **At the August 2024 publication time**, GPT-4o was the only major model with native audio input/output capabilities.
 
 Within 6 months of GPT-4o's release:
-- Google reportedly working on Gemini with native audio
+- Google was working on Gemini with native audio
 - Anthropic exploring similar capabilities  
 - Meta's open-source efforts gaining traction
 - Chinese labs (ByteDance, Alibaba) launching omni models
@@ -581,56 +572,19 @@ The "pipeline era" of multimodal AI is essentially over.
 
 ---
 
-### 2. Democratization Through Cost and Access
-
-GPT-4o isn't just technically better—it's dramatically more accessible.
-
-**The Numbers:**
-- **50% cheaper** than GPT-4 Turbo ($5/M tokens vs $10/M tokens for output)
-- **2x faster** API responses
-- **5x higher rate limits** (10,000 requests/min vs 2,000 for GPT-4 Turbo)
-- **Free tier access** (unprecedented for this capability level)
-
-**What This Enables:**
-
-Small startups and individual developers can now build applications that would have been cost-prohibitive before:
-- Real-time language tutoring (like Duolingo's implementation)
-- Live accessibility tools for blind/low-vision users
-- Conversational interfaces for complex software
-- Educational applications with voice interaction
-
-Before GPT-4o, these use cases existed but were expensive enough that only well-funded companies could deploy them at scale. Now they're accessible to solo developers.
-
----
-
-### 3. New Safety Challenges
+### 2. New Safety Challenges
 
 GPT-4o introduced risks that text-only models don't have. The system card identifies several:
 
 | Risk | Why It Matters | Mitigation Status |
 |------|----------------|-------------------|
-| **Voice cloning** | Could enable fraud, impersonation | Preset voices only + real-time classifier (effective) |
 | **Speaker identification** | Privacy invasion, surveillance | Model refuses identification requests (effective) |
 | **Emotional manipulation** | Human-like voice may be more persuasive | Studied but found Low risk for audio |
-| **Anthropomorphization** | Users forming emotional attachments | Identified but no mitigation yet |
 | **Unauthorized voice generation** | Model might mimic user's voice unintentionally | Secondary classifier catches it (reactive, not preventive) |
-
-**The Pattern:**
-
-Many mitigations are **filters** rather than **fixed behaviors**. The model can still do the problematic thing—you're just catching it after the fact. This works, but it's not ideal.
-
-**Broader Implications:**
-
-As AI becomes more human-like in its interactions, we need to think about:
-- How do we prevent emotional dependency on AI systems?
-- Should there be "friction" in AI interactions to remind users it's not human?
-- What are the ethics of AI that sounds exactly like a specific person (even with consent)?
-
-These questions don't have clear answers yet, and GPT-4o has pushed us into territory where they matter.
 
 ---
 
-### 4. Real-World Applications Enabled
+### 3. Real-World Applications Enabled
 
 The system card mentions several concrete applications:
 
@@ -653,7 +607,7 @@ The system card mentions several concrete applications:
 
 ---
 
-### 5. Underrepresented Languages
+### 4. Underrepresented Languages
 
 This deserves its own mention. GPT-4o shows significant improvements in languages that typically get neglected in AI training:
 
@@ -666,41 +620,19 @@ That's a nearly 3x improvement. The gap between English performance (94.8%) and 
 **Why This Matters:**
 
 AI has historically been dominated by English, Mandarin, and a handful of other major languages. Better performance on underrepresented languages means:
-- More equitable access to AI tools
 - Preservation of linguistic diversity
+- More equitable access to AI tools
 - Economic opportunities in regions that speak these languages
 
 The system card shows OpenAI partnering with native speakers to create better evaluations for Amharic, Hausa, Northern Sotho, Swahili, and Yoruba. That collaborative approach is worth noting—you can't evaluate a language well without speakers of that language involved.
 
 ---
 
-### 6. Future Directions
-
-**Disclaimer:** The following projections are analytical extrapolations based on industry trends at the time of this presentation (November 2024), not claims made in the GPT-4o system card.
-
-**Short-term (6-12 months from November 2024):**
-1. **Competitive response**: Other major labs (Google, Anthropic, Meta) likely developing native audio capabilities
-2. **Open-source omni models**: Projects like Qwen2-Audio gaining traction
-3. **Mobile deployment**: Integration into smartphones and edge devices (based on Apple Intelligence announcements)
-
-**Long-term (1-3 years from November 2024):**
-1. **Continuous multimodal learning**: Models that can be updated with new modalities without full retraining
-2. **Grounded omni models**: Integration with robotics (visual + audio + action in physical world)
-3. **Efficiency breakthroughs**: Reduced training costs making omni models more accessible
-
-**From the Paper - Scientific Capabilities** (Section 5.3):
-
-The paper discusses potential for scientific acceleration:
-- Red teamers found GPT-4o could understand "research-level quantum physics"
-- Potential applications: AI research assistants that read papers, interpret figures, discuss via voice
-- Could accelerate "mundane tasks" like literature review and figure interpretation
-- **Note:** These are possibilities discussed in the paper, not demonstrated capabilities at scale
-
-**Research Questions Still Open:**
+### 5. Research Questions Still Open  
+  
 - Can we achieve true end-to-end training without massive resources?
 - How do we evaluate audio and video understanding without synthetic test data?
 - What's the right balance between capability and safety for human-like AI?
-- How do we prevent emotional over-reliance on AI assistants?
 
 ---
 
@@ -712,39 +644,9 @@ The paper discusses potential for scientific acceleration:
 3. Made advanced multimodal AI accessible (free tier + low cost)
 4. Identified and documented new risks from audio-capable AI
 
-**What Remains Unclear:**
-1. Exact architectural details (preventing replication)
-2. Whether evaluation methods adequately test real-world robustness
-3. How to address anthropomorphization and emotional reliance
-4. Long-term societal impacts of human-like AI interaction
-
-**Why This Matters:**
 GPT-4o represents both an engineering achievement and a case study in responsible AI deployment. The system card format—documenting risks, evaluations, and mitigations—sets a precedent for how labs should communicate about frontier models. But it also shows the limits of transparency when business interests and scientific openness collide.
 
 As we build more capable AI systems, the gap between "what the model can do" and "what we understand about its impacts" will likely grow. GPT-4o pushes us to think seriously about how we evaluate, deploy, and monitor AI that increasingly blurs the line between tool and conversational partner.
-
----
-
-## Additional Resources
-
-1. **Official Paper**: [GPT-4o System Card (arXiv)](https://arxiv.org/abs/2410.21276) - Full technical and safety evaluation details
-
-2. **OpenAI Blog Post**: [Hello GPT-4o](https://openai.com/index/hello-gpt-4o/) - High-level introduction with demo videos
-
-3. **Third-Party Evaluation**:
-   - [METR's GPT-4o Assessment](https://evaluations.metr.org/gpt-4o-report/ ) - Independent evaluation of autonomous capabilities
-
-4. **Open Source Replications**:
-   - [Mini-Omni2 Paper](https://arxiv.org/abs/2410.11190) - Attempt to recreate GPT-4o architecture
-   - [Mini-Omni2 GitHub](https://github.com/gpt-omni/mini-omni2) - Code and model weights
-
-5. **Related Technical Deep Dives**:
-   - [Formal Algorithms for Transformers](https://arxiv.org/abs/2207.09238) - Foundational transformer architecture (our course paper)
-   - [Multimodal Learning Overview](https://dataroots.io/blog/gpt4-multimodality) - Explains fusion techniques
-
-6. **Safety and Ethics**:
-   - [OpenAI Red Teaming Network](https://openai.com/index/red-teaming-network/) - How external experts evaluate models
-   - [MIT Tech Review on Emotional Voice Risks](https://www.technologyreview.com/2024/08/09/1094715/openai-gpt4o-emotional-voice/)
 
 ---
 
@@ -781,3 +683,26 @@ As we build more capable AI systems, the gap between "what the model can do" and
 - Better evaluation frameworks for multimodal capabilities
 - Open-source replications to enable broader research
 - Addressing safety challenges unique to human-like AI interaction
+
+---
+
+## Additional Resources
+
+1. **Official Paper**: [GPT-4o System Card (arXiv)](https://arxiv.org/abs/2410.21276) - Full technical and safety evaluation details
+
+2. **OpenAI Blog Post**: [Hello GPT-4o](https://openai.com/index/hello-gpt-4o/) - High-level introduction with demo videos
+
+3. **Third-Party Evaluation**:
+   - [METR's GPT-4o Assessment](https://evaluations.metr.org/gpt-4o-report/ ) - Independent evaluation of autonomous capabilities
+
+4. **Open Source Replications**:
+   - [Mini-Omni2 Paper](https://arxiv.org/abs/2410.11190) - Attempt to recreate GPT-4o architecture
+   - [Mini-Omni2 GitHub](https://github.com/gpt-omni/mini-omni2) - Code and model weights
+
+5. **Related Technical Deep Dives**:
+   - [Formal Algorithms for Transformers](https://arxiv.org/abs/2207.09238) - Foundational transformer architecture (our course paper)
+   - [Multimodal Learning Overview](https://dataroots.io/blog/gpt4-multimodality) - Explains fusion techniques
+
+6. **Safety and Ethics**:
+   - [OpenAI Red Teaming Network](https://openai.com/index/red-teaming-network/) - How external experts evaluate models
+   - [MIT Tech Review on Emotional Voice Risks](https://www.technologyreview.com/2024/08/09/1094715/openai-gpt4o-emotional-voice/)
